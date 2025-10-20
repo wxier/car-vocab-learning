@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const markKnownBtn = document.getElementById('mark-known-btn');
+    const speakBtn = document.getElementById('speak-btn');
     const cardCount = document.getElementById('card-count');
     const progressText = document.getElementById('progress');
     const progressFill = document.getElementById('progress-fill');
@@ -49,6 +50,38 @@ document.addEventListener('DOMContentLoaded', () => {
         updateProgress();
         saveProgress();
     });
+    
+    // 朗读英文全称
+    speakBtn.addEventListener('click', () => {
+        speakText(vocabularyData[currentIndex].fullName);
+    });
+    
+    // 使用Web Speech API朗读文本
+    function speakText(text) {
+        // 检查浏览器是否支持语音合成
+        if ('speechSynthesis' in window) {
+            // 创建一个新的SpeechSynthesisUtterance实例
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // 设置语音参数
+            utterance.lang = 'en-US'; // 设置为英语
+            utterance.rate = 0.9;     // 语速稍慢一点
+            utterance.pitch = 1;      // 音调
+            
+            // 开始朗读
+            window.speechSynthesis.speak(utterance);
+            
+            // 添加视觉反馈
+            speakBtn.classList.add('speaking');
+            
+            // 朗读结束后移除视觉反馈
+            utterance.onend = () => {
+                speakBtn.classList.remove('speaking');
+            };
+        } else {
+            alert('很抱歉，您的浏览器不支持语音合成功能');
+        }
+    }
     
     // 更新卡片内容
     function updateCard() {
