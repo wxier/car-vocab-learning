@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#3498db">
+    <title>车载测试词汇学习</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>车载测试词汇学习</h1>
+            <div class="progress-container">
+                <div class="progress-text">学习进度: <span id="progress">0%</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="controls">
+                <button id="prev-btn">上一个</button>
+                <span id="card-count">0/0</span>
+                <button id="next-btn">下一个</button>
+            </div>
+            
+            <div class="card-container">
+                <div class="card" id="flashcard">
+                    <div class="card-front">
+                        <div class="term-abbr"></div>
+                        <div class="term-cn"></div>
+                    </div>
+                    <div class="card-back">
+                        <div class="term-full"></div>
+                        <div class="term-desc"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button id="flip-btn">翻转卡片</button>
+                <button id="mark-known-btn">标记为已掌握</button>
+            </div>
+        </main>
+        
+        <footer>
+            <p>自学车载测试词汇 &copy; 2024</p>
+        </footer>
+    </div>
+    
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // 注册Service Worker以支持离线功能
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker 注册成功:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker 注册失败:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
